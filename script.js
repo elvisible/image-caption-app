@@ -3,6 +3,7 @@ const folderInput = document.getElementById('folderInput');
 const statusDiv = document.getElementById('status');
 const downloadLink = document.getElementById('downloadLink');
 
+// ⚠️ WARNING: Do NOT expose your real API key in production!
 const apiKey = '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';
 
 async function generateCaption(base64Image) {
@@ -25,7 +26,7 @@ async function generateCaption(base64Image) {
             {
               type: "image_url",
               image_url: {
-                url: base64Image,
+                url: base64Image, // Must include full data:image/...;base64,... string
               },
             },
           ],
@@ -35,19 +36,20 @@ async function generateCaption(base64Image) {
     }),
   });
 
-const data = await response.json();
-if (!response.ok) {
-  console.error("API Error:", data);
-  throw new Error(data.error?.message || "Unknown API error");
-}
-return data.choices[0]?.message?.content?.trim() || "No description.";
+  const data = await response.json();
 
+  if (!response.ok) {
+    console.error("API Error:", data);
+    throw new Error(data.error?.message || "Unknown API error");
+  }
+
+  return data.choices[0]?.message?.content?.trim() || "No description.";
 }
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); // Returns full base64 data URL
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
   });
@@ -70,16 +72,17 @@ processBtn.addEventListener('click', async () => {
     const file = files[i];
     statusDiv.textContent = `Processing ${file.name} (${i + 1}/${files.length})`;
 
-    const base64 = await fileToBase64(file);
     try {
+      const base64 = await fileToBase64(file);
       const description = await generateCaption(base64);
       results.push([file.webkitRelativePath, description]);
     } catch (err) {
+      console.error("Error with file:", file.name, err);
       results.push([file.webkitRelativePath, "Error generating description GPT"]);
     }
   }
 
-  // Convert to CSV and offer download
+  // Convert results to CSV
   const csvContent = results.map(e => e.map(v => `"${v}"`).join(",")).join("\n");
   const blob = new Blob([csvContent], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
