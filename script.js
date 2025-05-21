@@ -4,7 +4,7 @@ const statusDiv = document.getElementById('status');
 const downloadLink = document.getElementById('downloadLink');
 
 // ⚠️ WARNING: Do NOT expose your real API key in production!
-const apiKey = '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';
+const apiKey = 'sk-proj-Df0-API KEY HERE';
 
 async function generateCaption(base64Image) {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
