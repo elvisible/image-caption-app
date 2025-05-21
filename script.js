@@ -3,7 +3,7 @@ const folderInput = document.getElementById('folderInput');
 const statusDiv = document.getElementById('status');
 const downloadLink = document.getElementById('downloadLink');
 
-const apiKey = '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';
+const apiKey = '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';
 
 async function generateCaption(base64Image) {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -35,8 +35,13 @@ async function generateCaption(base64Image) {
     }),
   });
 
-  const data = await response.json();
-  return data.choices[0]?.message?.content?.trim() || "No description.";
+const data = await response.json();
+if (!response.ok) {
+  console.error("API Error:", data);
+  throw new Error(data.error?.message || "Unknown API error");
+}
+return data.choices[0]?.message?.content?.trim() || "No description.";
+
 }
 
 function fileToBase64(file) {
