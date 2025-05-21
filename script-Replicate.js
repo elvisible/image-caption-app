@@ -4,7 +4,7 @@ const statusDiv = document.getElementById('status');
 const downloadLink = document.getElementById('downloadLink');
 
 // 🔐 Replace with your Replicate API token
-const replicateApiToken = 'r8_TXipG1AgpvzXLUnJViWb1ADcZWpil5J1iL5dp';
+const replicateApiToken = 'API KEY!!!!!!!!!!!!!!!!!!!!!!!!!!! HERE';
 
 // Helper to read image as base64
 function fileToBase64(file) {
@@ -21,7 +21,7 @@ async function uploadToImgBB(base64Image) {
   const formData = new FormData();
   formData.append('image', base64Image.split(',')[1]);
 
-  const response = await fetch('https://api.imgbb.com/1/upload?key=r8_TXipG1AgpvzXLUnJViWb1ADcZWpil5J1iL5dp', {
+  const response = await fetch('https://api.imgbb.com/1/upload?key=API KEY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!HERE', {
     method: 'POST',
     body: formData
   });
