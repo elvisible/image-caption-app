@@ -4,7 +4,7 @@ const statusDiv = document.getElementById('status');
 const downloadLink = document.getElementById('downloadLink');
 
 // ⚠️ WARNING: Do NOT expose your real API key in production!
-const apiKey = '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';
+const apiKey = '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';
 
 async function generateCaption(base64Image) {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -14,7 +14,7 @@ async function generateCaption(base64Image) {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "gpt-4-vision-preview",
+      model: "gpt-4o",
       messages: [
         {
           role: "user",
@@ -26,7 +26,7 @@ async function generateCaption(base64Image) {
             {
               type: "image_url",
               image_url: {
-                url: base64Image, // Must include full data:image/...;base64,... string
+                url: base64Image,
               },
             },
           ],
@@ -38,6 +38,7 @@ async function generateCaption(base64Image) {
 
   const data = await response.json();
 
+  // Check and log error if the request failed
   if (!response.ok) {
     console.error("API Error:", data);
     throw new Error(data.error?.message || "Unknown API error");
@@ -45,6 +46,7 @@ async function generateCaption(base64Image) {
 
   return data.choices[0]?.message?.content?.trim() || "No description.";
 }
+
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
