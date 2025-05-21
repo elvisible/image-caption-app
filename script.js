@@ -4,7 +4,7 @@ const statusDiv = document.getElementById('status');
 const downloadLink = document.getElementById('downloadLink');
 
 // 🔐 Replace with your Replicate API token
-const replicateApiToken = 'r8_8ouZzccS5WMcVWPqBQsGwew0NV3vQIX2Nh51R';
+const replicateApiToken = 'r8_TXipG1AgpvzXLUnJViWb1ADcZWpil5J1iL5dp';
 
 // Helper to read image as base64
 function fileToBase64(file) {
