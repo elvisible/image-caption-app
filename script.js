@@ -70,7 +70,7 @@ processBtn.addEventListener('click', async () => {
       const description = await generateCaption(base64);
       results.push([file.webkitRelativePath, description]);
     } catch (err) {
-      results.push([file.webkitRelativePath, "Error generating description"]);
+      results.push([file.webkitRelativePath, "Error generating description GPT"]);
     }
   }
 
